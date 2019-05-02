@@ -1,4 +1,4 @@
 steps: 
   - name: 'gcr.io/cloud-builders/docker'
-    entorypoint: 'sh'
+    entrypoint: 'sh'
     args: ['./build.sh']
