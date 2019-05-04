@@ -1,3 +1,4 @@
+git fetch --unshallow
 DOCKERILES=`find ./ -name Dockerfile`
 for DOCKERILE in $DOCKERILES
 do
