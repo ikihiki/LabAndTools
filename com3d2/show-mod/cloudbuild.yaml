@@ -1,0 +1,8 @@
+steps: 
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/ikihikilabandtools/com3d2_show-mod', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/ikihikilabandtools/com3d2_show-mod']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['beta', 'run', 'deploy', 'com3d2-show-mod', '--image', 'gcr.io/ikihikilabandtools/com3d2_show-mod', '--region', 'us-central1','--platform', 'managed']
+images: ['gcr.io/ikihikilabandtools/com3d2_show-mod']

@@ -1,6 +1,20 @@
 steps: 
   - name: gcr.io/cloud-builders/git
     args: ['fetch', '--unshallow']
-  - name: 'gcr.io/cloud-builders/docker'
+  - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
-    args: ['./build.sh']
+    args:
+    - '-c'
+    - |
+      for config in `find ./**/ -name cloudbuild.yaml`; do
+        dir="${config%/*}"
+        if [ `git show --stat -- "$dir" | wc -l` = 0 ]; then
+          continue
+        fi
+
+        echo "Building $dir ... "
+        (
+          gcloud builds submit $dir --config=${config}
+        ) &
+      done
+      wait
