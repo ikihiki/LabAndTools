@@ -1,0 +1,22 @@
+// See https://aka.ms/vscode-remote/devcontainer.json for format details.
+{
+	"name": "Node.js (latest LTS) & TypeScript",
+	"dockerFile": "Dockerfile",
+
+	// Uncomment the next line if you want to publish any ports.
+	"appPort": ["8001:80"],
+
+	// Uncomment the next line if you want to add in default container specific settings.json values
+	"settings":  {
+		"editor.formatOnPaste": true,
+		"editor.formatOnSave": true,
+		"editor.formatOnType": true
+	},
+
+	// Uncomment the next line to run commands after the container is created.
+	"postCreateCommand": "yarn install",
+
+	"extensions": [
+		"esbenp.prettier-vscode"
+	]
+}
