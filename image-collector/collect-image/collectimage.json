@@ -1,0 +1,114 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Collect-Image",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url":"http://localhost:8001/",
+            "description":"Local Dev Server"
+        }
+    ],
+    "components": { 
+        "schemas": {
+            "GetXPathContentParameter": {
+                "type":"object",
+                "required": ["url", "waitXPath", "getXPath"],
+                "properties": {
+                    "url": {
+                        "type": "string"
+                    },
+                    "waitXPath":{
+                        "type": "string"
+                    },
+                    "getXPath":{
+                        "type": "string"
+                    },
+                    "property":{
+                        "type": "string"
+                    }
+                }
+            },
+            "GetScreenShotParameter": {
+                "type":"object",
+                "properties": {
+                    "url": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "paths": {
+        "/": {
+            "get": {
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/get-ss": {
+            "post": {
+                "description": "Get page screen shoot",
+                "parameters": [],
+                "requestBody":{
+                    "description": "body",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/GetScreenShotParameter"
+                            },
+                            "example":{
+                                "url": "http://www.google.com"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "image/png":{
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/get-xpath-content": {
+            "post": {
+                "description": "Get xpath cntent",
+                "parameters": [],
+                "requestBody":{
+                    "description": "body",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/GetXPathContentParameter"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json":{
+                                
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Error"
+                    }
+                }
+            }
+        }
+    }
+}

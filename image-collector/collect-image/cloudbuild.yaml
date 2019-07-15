@@ -1,0 +1,8 @@
+steps: 
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/ikihikilabandtools/image-collector_collect-image', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/ikihikilabandtools/image-collector_collect-image']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['beta', 'run', 'deploy', 'image-collector-collect-image', '--image', 'gcr.io/ikihikilabandtools/image-collector_collect-image', '--region', 'us-central1','--platform', 'managed']
+images: ['gcr.io/ikihikilabandtools/image-collector_collect-image']

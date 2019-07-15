@@ -1,33 +1,20 @@
 import express from "express";
-import puppeteer from "puppeteer";
-
-interface GetPageRequest {
-  url: string;
-}
+import { getScreenShot } from "./getScreenShoot";
+import { getXPathContent } from "./getXPathContent";
+import { env } from "process";
+import { BrowserService } from "./browserService";
 
 async function main() {
-  const browser = await puppeteer.launch({
-    args: ["--no-sandbox"]
-  });
+  await BrowserService.setup();
   const app = express();
   app.use(express.json());
   app.get("/", (req, res) => res.send("Hello world"));
-  app.post("/get-page", async (req, res) => {
-    const request = req.body as GetPageRequest;
-    const page = await browser.newPage();
-    await page.goto(request.url);
-    const filename = `/ss/ss-${Date.now()}.png`;
-    await page.screenshot({ path: filename });
-    page.close()
-    res.sendFile(filename);
-  });
-  app.listen(80, () => console.log("Example app listening on port 80!"));
+  app.use(getScreenShot);
+  app.use(getXPathContent);
+  const port = Number(env.PORT) || 80;
+  app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+  await BrowserService.close();
 }
 
-(async () => {
-  try {
-    await main();
-  } catch (e) {
-    // Deal with the fact the chain failed
-  }
-})();
+main();
+
